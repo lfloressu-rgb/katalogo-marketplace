@@ -24,7 +24,7 @@ export default function ProductReviews({ productoId, initialRating, initialRevie
         }
         
         try {
-            const res = await fetch(`http://localhost:5000/api/productos/${productoId}/valorar`, {
+            const res = await fetch(`http://10.159.200.34/api/productos/${productoId}/valorar`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

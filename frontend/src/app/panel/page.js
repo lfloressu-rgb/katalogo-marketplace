@@ -31,7 +31,7 @@ export default function PanelPage() {
     const parsedUser = JSON.parse(userString);
     
     // Fetch para obtener datos actualizados del usuario (incluye foto_perfil si existe)
-    fetch(`http://localhost:5000/api/perfil/${parsedUser.id}`)
+    fetch(`http://10.159.200.34/api/perfil/${parsedUser.id}`)
       .then(res => res.json())
       .then(data => {
         if (!data.message) {
@@ -44,7 +44,7 @@ export default function PanelPage() {
       .catch(() => setUser(parsedUser));
       
     // Fetch ordenes
-    fetch(`http://localhost:5000/api/ordenes/usuario/${parsedUser.id}`)
+    fetch(`http://10.159.200.34/api/ordenes/usuario/${parsedUser.id}`)
       .then(res => res.json())
       .then(data => {
         setOrdenes(Array.isArray(data) ? data : []);
@@ -62,25 +62,25 @@ export default function PanelPage() {
     
     if (activeTab === 'direcciones') {
         setLoadingTab(true);
-        fetch(`http://localhost:5000/api/direcciones/usuario/${user.id}`)
+        fetch(`http://10.159.200.34/api/direcciones/usuario/${user.id}`)
             .then(res => res.json())
             .then(data => { setDirecciones(Array.isArray(data) ? data : []); setLoadingTab(false); })
             .catch(() => setLoadingTab(false));
     } else if (activeTab === 'pagos') {
         setLoadingTab(true);
-        fetch(`http://localhost:5000/api/pagos/usuario/${user.id}`)
+        fetch(`http://10.159.200.34/api/pagos/usuario/${user.id}`)
             .then(res => res.json())
             .then(data => { setTarjetas(Array.isArray(data) ? data : []); setLoadingTab(false); })
             .catch(() => setLoadingTab(false));
     } else if (activeTab === 'favoritos') {
         setLoadingTab(true);
-        fetch(`http://localhost:5000/api/favoritos/usuario/${user.id}`)
+        fetch(`http://10.159.200.34/api/favoritos/usuario/${user.id}`)
             .then(res => res.json())
             .then(data => { setFavoritos(Array.isArray(data) ? data : []); setLoadingTab(false); })
             .catch(() => setLoadingTab(false));
     } else if (activeTab === 'soporte') {
         setLoadingTab(true);
-        fetch('http://localhost:5000/api/soporte/cliente', { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+        fetch('http://10.159.200.34/api/soporte/cliente', { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
             .then(res => res.json())
             .then(data => { setReclamos(Array.isArray(data) ? data : []); setLoadingTab(false); })
             .catch(() => setLoadingTab(false));
@@ -124,7 +124,7 @@ export default function PanelPage() {
     formData.append('imagen', file);
 
     try {
-        const res = await fetch('http://localhost:5000/api/upload', {
+        const res = await fetch('http://10.159.200.34/api/upload', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -135,7 +135,7 @@ export default function PanelPage() {
         
         if (data.url) {
             // Actualizar perfil en BD
-            await fetch(`http://localhost:5000/api/perfil/${user.id}`, {
+            await fetch(`http://10.159.200.34/api/perfil/${user.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ foto_perfil: data.url })
@@ -167,13 +167,13 @@ export default function PanelPage() {
 
     try {
         if (direccionEditando) {
-            await fetch(`http://localhost:5000/api/direcciones/${direccionEditando.id}`, {
+            await fetch(`http://10.159.200.34/api/direcciones/${direccionEditando.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
         } else {
-            await fetch('http://localhost:5000/api/direcciones', {
+            await fetch('http://10.159.200.34/api/direcciones', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -183,7 +183,7 @@ export default function PanelPage() {
         e.target.reset();
         setDireccionEditando(null);
         // Recargar direcciones
-        const res = await fetch(`http://localhost:5000/api/direcciones/usuario/${user.id}`);
+        const res = await fetch(`http://10.159.200.34/api/direcciones/usuario/${user.id}`);
         const nuevas = await res.json();
         setDirecciones(nuevas);
         alert(direccionEditando ? 'Dirección actualizada!' : 'Dirección agregada!');
@@ -194,7 +194,7 @@ export default function PanelPage() {
 
   const handleDeleteAddress = async (id) => {
     if(confirm('¿Seguro que deseas eliminar esta dirección?')) {
-        await fetch(`http://localhost:5000/api/direcciones/${id}`, { method: 'DELETE' });
+        await fetch(`http://10.159.200.34/api/direcciones/${id}`, { method: 'DELETE' });
         setDirecciones(direcciones.filter(d => d.id !== id));
     }
   };
@@ -219,14 +219,14 @@ export default function PanelPage() {
     };
 
     try {
-        await fetch('http://localhost:5000/api/pagos', {
+        await fetch('http://10.159.200.34/api/pagos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
         e.target.reset();
         // Recargar pagos
-        const res = await fetch(`http://localhost:5000/api/pagos/usuario/${user.id}`);
+        const res = await fetch(`http://10.159.200.34/api/pagos/usuario/${user.id}`);
         const nuevos = await res.json();
         setTarjetas(nuevos);
         alert('Tarjeta agregada exitosamente!');
@@ -237,14 +237,14 @@ export default function PanelPage() {
 
   const handleDeleteCard = async (id) => {
     if(confirm('¿Seguro que deseas eliminar esta tarjeta?')) {
-        await fetch(`http://localhost:5000/api/pagos/${id}`, { method: 'DELETE' });
+        await fetch(`http://10.159.200.34/api/pagos/${id}`, { method: 'DELETE' });
         setTarjetas(tarjetas.filter(t => t.id !== id));
     }
   };
 
   const handleRemoveFavorito = async (producto_id) => {
     try {
-        await fetch('http://localhost:5000/api/favoritos', {
+        await fetch('http://10.159.200.34/api/favoritos', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario_id: user.id, producto_id })
@@ -382,7 +382,7 @@ export default function PanelPage() {
                     telefono: formData.get('telefono'),
                     fecha_nacimiento: formData.get('fecha_nacimiento')
                 };
-                await fetch(`http://localhost:5000/api/perfil/${user.id}`, {
+                await fetch(`http://10.159.200.34/api/perfil/${user.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -598,7 +598,7 @@ export default function PanelPage() {
                 mensaje: formData.get('mensaje')
               };
               try {
-                const res = await fetch('http://localhost:5000/api/soporte/cliente', {
+                const res = await fetch('http://10.159.200.34/api/soporte/cliente', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
                   body: JSON.stringify(data)

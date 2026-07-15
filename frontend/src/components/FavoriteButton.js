@@ -12,7 +12,7 @@ export default function FavoriteButton({ productoId }) {
             const parsedUser = JSON.parse(userString);
             setUser(parsedUser);
             // Verificar si está en favoritos
-            fetch(`http://localhost:5000/api/favoritos/usuario/${parsedUser.id}`)
+            fetch(`http://10.159.200.34/api/favoritos/usuario/${parsedUser.id}`)
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data) && data.some(f => f.producto_id === productoId)) {
@@ -31,14 +31,14 @@ export default function FavoriteButton({ productoId }) {
 
         try {
             if (esFavorito) {
-                await fetch('http://localhost:5000/api/favoritos', {
+                await fetch('http://10.159.200.34/api/favoritos', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ usuario_id: user.id, producto_id: productoId })
                 });
                 setEsFavorito(false);
             } else {
-                await fetch('http://localhost:5000/api/favoritos', {
+                await fetch('http://10.159.200.34/api/favoritos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ usuario_id: user.id, producto_id: productoId })

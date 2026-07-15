@@ -5,7 +5,7 @@ export default async function BuscarPage({ searchParams }) {
   
   let products = [];
   try {
-    const res = await fetch(`http://localhost:5000/api/productos?search=${encodeURIComponent(query)}`, { 
+    const res = await fetch(`http://10.159.200.34/api/productos?search=${encodeURIComponent(query)}`, { 
       cache: 'no-store' 
     });
     if (res.ok) {

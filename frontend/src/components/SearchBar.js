@@ -26,7 +26,7 @@ export default function SearchBar() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (query.trim().length > 1) {
-        fetch(`http://localhost:5000/api/productos?search=${encodeURIComponent(query)}`)
+        fetch(`http://10.159.200.34/api/productos?search=${encodeURIComponent(query)}`)
           .then(res => res.json())
           .then(data => {
             setResults(data);

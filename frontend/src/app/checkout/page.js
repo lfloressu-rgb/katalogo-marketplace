@@ -33,7 +33,7 @@ export default function CheckoutPage() {
       setUser(parsedUser);
       
       // Fetch direcciones
-      fetch(`http://localhost:5000/api/direcciones/usuario/${parsedUser.id}`)
+      fetch(`http://10.159.200.34/api/direcciones/usuario/${parsedUser.id}`)
         .then(res => res.json())
         .then(data => {
             if (Array.isArray(data)) {
@@ -45,7 +45,7 @@ export default function CheckoutPage() {
         }).catch(err => console.error(err));
         
       // Fetch tarjetas
-      fetch(`http://localhost:5000/api/pagos/usuario/${parsedUser.id}`)
+      fetch(`http://10.159.200.34/api/pagos/usuario/${parsedUser.id}`)
         .then(res => res.json())
         .then(data => {
             if (Array.isArray(data)) {
@@ -88,7 +88,7 @@ export default function CheckoutPage() {
       }
       
       // Llamada al backend de órdenes
-      const res = await fetch('http://localhost:5000/api/ordenes', {
+      const res = await fetch('http://10.159.200.34/api/ordenes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
