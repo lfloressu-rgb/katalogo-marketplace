@@ -37,7 +37,7 @@ app.use('/api/favoritos', favoritosRoutes);
 
 // Servir la carpeta de imágenes de manera estática
 const path = require('path');
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Basic Route
 app.get('/', (req, res) => {

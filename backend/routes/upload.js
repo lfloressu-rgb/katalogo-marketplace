@@ -35,7 +35,7 @@ router.post('/', verifyToken, upload.single('imagen'), (req, res) => {
         
         // Devolvemos la ruta relativa de la imagen
         const serverUrl = 'http://10.159.200.34';
-        const imagenUrl = `${serverUrl}/uploads/${req.file.filename}`;
+        const imagenUrl = `${serverUrl}/api/uploads/${req.file.filename}`;
         res.json({ message: 'Imagen subida exitosamente', url: imagenUrl });
     } catch (error) {
         console.error('Error al subir imagen:', error);
