@@ -43,12 +43,12 @@ export default function AdminPage() {
     const headers = { 'Authorization': `Bearer ${token}` };
     
     Promise.all([
-      fetch('http://10.159.200.34/api/admin/metricas', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/admin/tiendas', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/admin/usuarios', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/admin/categorias', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/admin/finanzas', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/admin/ordenes', { headers }).then(r => r.json())
+      fetch('/api/admin/metricas', { headers }).then(r => r.json()),
+      fetch('/api/admin/tiendas', { headers }).then(r => r.json()),
+      fetch('/api/admin/usuarios', { headers }).then(r => r.json()),
+      fetch('/api/admin/categorias', { headers }).then(r => r.json()),
+      fetch('/api/admin/finanzas', { headers }).then(r => r.json()),
+      fetch('/api/admin/ordenes', { headers }).then(r => r.json())
     ]).then(([dataMetricas, dataTiendas, dataUsuarios, dataCategorias, dataFinanzas, dataOrdenes]) => {
       setMetricas(dataMetricas);
       setTiendas(Array.isArray(dataTiendas) ? dataTiendas : []);
@@ -69,9 +69,9 @@ export default function AdminPage() {
     const headers = { 'Authorization': `Bearer ${token}` };
     try {
       const [finRes, liqRes, confRes] = await Promise.all([
-        fetch(`http://10.159.200.34/api/admin/finanzas?rango=${rangoFecha}`, { headers }),
-        fetch('http://10.159.200.34/api/admin/liquidaciones', { headers }),
-        fetch('http://10.159.200.34/api/admin/config', { headers })
+        fetch(`/api/admin/finanzas?rango=${rangoFecha}`, { headers }),
+        fetch('/api/admin/liquidaciones', { headers }),
+        fetch('/api/admin/config', { headers })
       ]);
       
       if (finRes.ok) setFinanzas(await finRes.json());
@@ -94,7 +94,7 @@ export default function AdminPage() {
   const handleActualizarComision = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://10.159.200.34/api/admin/config', {
+      const res = await fetch('/api/admin/config', {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ comision_plataforma: comisionEdit })
@@ -110,7 +110,7 @@ export default function AdminPage() {
     if (!confirm('¿Estás seguro que deseas marcar todas las ventas pendientes de esta tienda como pagadas/liquidadas?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://10.159.200.34/api/admin/liquidaciones/${tiendaId}/pagar`, {
+      const res = await fetch(`/api/admin/liquidaciones/${tiendaId}/pagar`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -124,7 +124,7 @@ export default function AdminPage() {
   const handleAprobar = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://10.159.200.34/api/admin/tiendas/${id}/aprobar`, {
+      const res = await fetch(`/api/admin/tiendas/${id}/aprobar`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -141,7 +141,7 @@ export default function AdminPage() {
     if (!confirm('¿Estás seguro de rechazar esta tienda?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://10.159.200.34/api/admin/tiendas/${id}/rechazar`, {
+      const res = await fetch(`/api/admin/tiendas/${id}/rechazar`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -157,7 +157,7 @@ export default function AdminPage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://10.159.200.34/api/admin/categorias`, {
+      const res = await fetch(`/api/admin/categorias`, {
         method: 'POST',
         headers: { 
           'Authorization': `Bearer ${token}`,
@@ -170,7 +170,7 @@ export default function AdminPage() {
         alert('Categoría creada');
         setNuevaCategoria('');
         // Recargar categorías
-        const catRes = await fetch('http://10.159.200.34/api/admin/categorias', { headers: { 'Authorization': `Bearer ${token}` } });
+        const catRes = await fetch('/api/admin/categorias', { headers: { 'Authorization': `Bearer ${token}` } });
         const newCats = await catRes.json();
         setCategorias(Array.isArray(newCats) ? newCats : []);
       } else {

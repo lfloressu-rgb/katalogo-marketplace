@@ -42,13 +42,13 @@ export default function VendedorPage() {
     const headers = { 'Authorization': `Bearer ${token}` };
     
     Promise.all([
-      fetch('http://10.159.200.34/api/vendedor/tienda', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/vendedor/productos', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/vendedor/ordenes', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/vendedor/reportes/ventas', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/vendedor/cupones', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/soporte/vendedor', { headers }).then(r => r.json()),
-      fetch('http://10.159.200.34/api/productos/categorias').then(r => r.json())
+      fetch('/api/vendedor/tienda', { headers }).then(r => r.json()),
+      fetch('/api/vendedor/productos', { headers }).then(r => r.json()),
+      fetch('/api/vendedor/ordenes', { headers }).then(r => r.json()),
+      fetch('/api/vendedor/reportes/ventas', { headers }).then(r => r.json()),
+      fetch('/api/vendedor/cupones', { headers }).then(r => r.json()),
+      fetch('/api/soporte/vendedor', { headers }).then(r => r.json()),
+      fetch('/api/productos/categorias').then(r => r.json())
     ]).then(([dTienda, dProds, dOrd, dRep, dCup, dRec, dCat]) => {
       setTienda(dTienda);
       setProductos(Array.isArray(dProds) ? dProds : []);
@@ -80,7 +80,7 @@ export default function VendedorPage() {
   const uploadImage = async (file) => {
     const fd = new FormData();
     fd.append('imagen', file);
-    const res = await fetch('http://10.159.200.34/api/upload', {
+    const res = await fetch('/api/upload', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
       body: fd
@@ -101,7 +101,7 @@ export default function VendedorPage() {
         variantes: variantes.length > 0 ? variantes : null
       };
 
-      const res = await fetch('http://10.159.200.34/api/vendedor/productos', {
+      const res = await fetch('/api/vendedor/productos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify(payload)
@@ -135,7 +135,7 @@ export default function VendedorPage() {
   const handleCrearCupon = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://10.159.200.34/api/vendedor/cupones', {
+      const res = await fetch('/api/vendedor/cupones', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify(nuevoCupon)
@@ -158,7 +158,7 @@ export default function VendedorPage() {
       
       const payload = { ...productoEditando, imagen_url };
       
-      const res = await fetch(`http://10.159.200.34/api/vendedor/productos/${productoEditando.id}`, {
+      const res = await fetch(`/api/vendedor/productos/${productoEditando.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify(payload)
@@ -175,7 +175,7 @@ export default function VendedorPage() {
 
   const handleResolverReclamo = async (id) => {
     try {
-      await fetch(`http://10.159.200.34/api/soporte/vendedor/${id}/resolver`, {
+      await fetch(`/api/soporte/vendedor/${id}/resolver`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });

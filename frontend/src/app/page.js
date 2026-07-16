@@ -5,7 +5,7 @@ export default async function Home() {
   // Fetch products from backend
   let trendingProducts = [];
   try {
-    const res = await fetch('http://10.159.200.34/api/productos', { cache: 'no-store' });
+    const res = await fetch('http://localhost:5000/api/productos', { cache: 'no-store' });
     if (res.ok) {
       trendingProducts = await res.json();
     }
@@ -16,7 +16,7 @@ export default async function Home() {
   // Fetch categories from backend
   let categories = [];
   try {
-    const res = await fetch('http://10.159.200.34/api/productos/categorias', { cache: 'no-store' });
+    const res = await fetch('http://localhost:5000/api/productos/categorias', { cache: 'no-store' });
     if (res.ok) {
       categories = await res.json();
     }
@@ -27,7 +27,7 @@ export default async function Home() {
   // Fetch stats from backend
   let stats = null;
   try {
-    const res = await fetch('http://10.159.200.34/api/productos/stats', { cache: 'no-store' });
+    const res = await fetch('http://localhost:5000/api/productos/stats', { cache: 'no-store' });
     if (res.ok) {
       stats = await res.json();
     }

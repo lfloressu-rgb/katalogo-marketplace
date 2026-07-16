@@ -25,7 +25,7 @@ export default function RegistroPage() {
     setError('');
 
     try {
-      const res = await fetch('http://10.159.200.34/api/auth/registro', {
+      const res = await fetch('/api/auth/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

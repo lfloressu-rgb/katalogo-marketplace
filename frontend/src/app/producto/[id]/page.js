@@ -8,7 +8,7 @@ export default async function ProductoPage({ params }) {
 
   let product = null;
   try {
-    const res = await fetch(`http://10.159.200.34/api/productos/${id}`, { 
+    const res = await fetch(`http://localhost:5000/api/productos/${id}`, { 
       cache: 'no-store' 
     });
     if (res.ok) {
